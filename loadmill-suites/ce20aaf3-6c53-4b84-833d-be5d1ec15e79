@@ -1,0 +1,52 @@
+{
+  "conf": {
+    "meta": {
+      "description": "New Test Suite - Aug 10"
+    },
+    "useCookies": true,
+    "loginFlow": [],
+    "authenticationHeaders": [],
+    "sharedLoginFlowDescription": "New Flow",
+    "parameters": []
+  },
+  "flows": [
+    {
+      "id": "efcb2eb6-c1eb-40b1-9f15-24df65eaf4e6",
+      "order": 0,
+      "conf": {
+        "duration": 60000,
+        "concurrency": 5,
+        "requests": [
+          {
+            "url": "asd",
+            "method": "GET",
+            "headers": [],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          }
+        ],
+        "meta": {
+          "description": "New Flow"
+        },
+        "skipLoginFlow": false,
+        "rampUp": 60000,
+        "parameterPools": [],
+        "targetedCountries": [],
+        "iterationDelay": 1000,
+        "cachePenetration": {},
+        "parameters": []
+      },
+      "runInCi": false
+    }
+  ],
+  "hooks": {},
+  "dependencies": {
+    "hooks": {},
+    "login": {
+      "id": "f67edfd3-5de6-4022-aa40-78dd39e0ee25"
+    }
+  }
+}
