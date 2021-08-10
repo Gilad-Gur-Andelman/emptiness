@@ -844,7 +844,7 @@
       "runInCi": false
     },
     {
-      "id": "3333b516-fbc1-469a-bc1f-c91861aac6a7",
+      "id": "3dce53ff-99fd-43af-995d-ba8d4102787a",
       "order": 9,
       "conf": {
         "requests": [
@@ -1444,7 +1444,1265 @@
           }
         ],
         "meta": {
-          "description": "Recorded Flow - Aug 10 07:14"
+          "description": "Recorded Flow - Aug 10 07:21"
+        },
+        "parameters": [
+          {
+            "blog_url": "https://loadmill-test-blog.herokuapp.com"
+          },
+          {
+            "username": "a@b.com"
+          },
+          {
+            "password": "Test1234"
+          },
+          {
+            "client_secret": "8c93bf1bb580"
+          },
+          {
+            "p2_request_body_posts_0_title": "My test post ${__random_number}"
+          },
+          {
+            "p4_request_body_username": "a@b.com"
+          },
+          {
+            "p4_request_body_password": "Test1234"
+          }
+        ]
+      },
+      "runInCi": false
+    },
+    {
+      "id": "66cc6a2a-554f-428b-a136-30fdc3671679",
+      "order": 10,
+      "conf": {
+        "requests": [
+          {
+            "url": "${blog_url}/",
+            "description": "GET /",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+              },
+              {
+                "Accept-Language": "en-US,en;q=0.9,he;q=0.8,pt;q=0.7"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost",
+            "description": "GET ghost",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+              },
+              {
+                "Accept-Language": "en-US,en;q=0.9,he;q=0.8,pt;q=0.7"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/",
+            "description": "GET ghost",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+              },
+              {
+                "Accept-Language": "en-US,en;q=0.9,he;q=0.8,pt;q=0.7"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p3_response_body_meta_name_env_blogUrl"
+              },
+              {
+                "check": "p3_response_body_meta_name_env_clientId"
+              },
+              {
+                "check": "p3_response_body_meta_name_env_clientSecret"
+              }
+            ],
+            "extract": [
+              {
+                "p3_response_body_meta_name_env_blogUrl": {
+                  "jQuery": {
+                    "query": "meta[name=\"env-blogUrl\"]",
+                    "attr": "content"
+                  }
+                }
+              },
+              {
+                "p3_response_body_meta_name_env_clientId": {
+                  "jQuery": {
+                    "query": "meta[name=\"env-clientId\"]",
+                    "attr": "content"
+                  }
+                }
+              },
+              {
+                "p3_response_body_meta_name_env_clientSecret": {
+                  "jQuery": {
+                    "query": "meta[name=\"env-clientSecret\"]",
+                    "attr": "content"
+                  }
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/authentication/token",
+            "description": "POST authentication/token",
+            "postData": {
+              "text": "grant_type=password&username=${__encode_url(p4_request_body_username)}&password=${__encode_url(p4_request_body_password)}&client_id=${__encode_url(p3_response_body_meta_name_env_clientId)}&client_secret=${__encode_url(p3_response_body_meta_name_env_clientSecret)}",
+              "mimeType": "application/x-www-form-urlencoded"
+            },
+            "method": "POST",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p4_response_body_access_token"
+              },
+              {
+                "check": "p4_response_body_token_type"
+              }
+            ],
+            "extract": [
+              {
+                "p4_response_body_access_token": {
+                  "jsonPath": "$[\"access_token\"]"
+                }
+              },
+              {
+                "p4_response_body_token_type": {
+                  "jsonPath": "$[\"token_type\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/settings/?type=blog%2Ctheme%2Cprivate",
+            "description": "GET settings",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/users/me/?include=roles&status=all",
+            "description": "GET users/me",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p6_response_body_users_0_language"
+              }
+            ],
+            "extract": [
+              {
+                "p6_response_body_users_0_language": {
+                  "jsonPath": "$[\"users\"][0][\"language\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/?page=1&limit=15&status=all&staticPages=all&include=tags",
+            "description": "GET posts",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/notifications/",
+            "description": "GET notifications",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/settings/?type=blog%2Ctheme%2Cprivate",
+            "description": "GET settings",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/tags/?limit=all",
+            "description": "GET tags",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/users/?limit=all&include=roles",
+            "description": "GET users",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/slugs/post/test/",
+            "description": "GET slugs/post/test",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p12_response_body_slugs_0_slug"
+              }
+            ],
+            "extract": [
+              {
+                "p12_response_body_slugs_0_slug": {
+                  "jsonPath": "$[\"slugs\"][0][\"slug\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/?include=tags",
+            "description": "POST posts",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"title\": \"test\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"draft\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"author\": \"1\",\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "POST",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p13_response_body_posts_0_id"
+              },
+              {
+                "check": "p13_response_body_posts_0_updated_at"
+              },
+              {
+                "check": "p13_response_body_posts_0_author"
+              },
+              {
+                "check": "p13_response_body_posts_0_created_at"
+              },
+              {
+                "check": "p13_response_body_posts_0_created_by"
+              },
+              {
+                "check": "p13_response_body_posts_0_updated_by"
+              }
+            ],
+            "extract": [
+              {
+                "p13_response_body_posts_0_id": {
+                  "jsonPath": "$[\"posts\"][0][\"id\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_updated_at": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_at\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_author": {
+                  "jsonPath": "$[\"posts\"][0][\"author\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_created_at": {
+                  "jsonPath": "$[\"posts\"][0][\"created_at\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_created_by": {
+                  "jsonPath": "$[\"posts\"][0][\"created_by\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_updated_by": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_by\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/${__encode_url(p13_response_body_posts_0_id)}/?include=tags",
+            "description": "PUT posts/${posts_0_id}",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"id\": ${__escape_quotes(p13_response_body_posts_0_id)},\n      \"title\": \"test\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"test\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"draft\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"updated_at\": \"${__escape_quotes(p13_response_body_posts_0_updated_at)}\",\n      \"updated_by\": ${__escape_quotes(p13_response_body_posts_0_updated_by)},\n      \"published_at\": null,\n      \"created_at\": \"${__escape_quotes(p13_response_body_posts_0_created_at)}\",\n      \"created_by\": ${__escape_quotes(p13_response_body_posts_0_created_by)},\n      \"author\": ${__escape_quotes(p13_response_body_posts_0_author)},\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "PUT",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/32924/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p14_response_body_posts_0_id"
+              },
+              {
+                "check": "p14_response_body_posts_0_updated_at"
+              },
+              {
+                "check": "p14_response_body_posts_0_author"
+              }
+            ],
+            "extract": [
+              {
+                "p14_response_body_posts_0_id": {
+                  "jsonPath": "$[\"posts\"][0][\"id\"]"
+                }
+              },
+              {
+                "p14_response_body_posts_0_updated_at": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_at\"]"
+                }
+              },
+              {
+                "p14_response_body_posts_0_author": {
+                  "jsonPath": "$[\"posts\"][0][\"author\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/${__encode_url(p14_response_body_posts_0_id)}/?include=tags",
+            "description": "PUT posts/${posts_0_id}",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"id\": ${__escape_quotes(p14_response_body_posts_0_id)},\n      \"title\": \"test\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"test123\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"draft\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"updated_at\": \"${__escape_quotes(p14_response_body_posts_0_updated_at)}\",\n      \"updated_by\": ${__escape_quotes(p13_response_body_posts_0_updated_by)},\n      \"published_at\": null,\n      \"created_at\": \"${__escape_quotes(p13_response_body_posts_0_created_at)}\",\n      \"created_by\": ${__escape_quotes(p13_response_body_posts_0_created_by)},\n      \"author\": ${__escape_quotes(p14_response_body_posts_0_author)},\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "PUT",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/32924/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p15_response_body_posts_0_id"
+              },
+              {
+                "check": "p15_response_body_posts_0_updated_at"
+              },
+              {
+                "check": "p15_response_body_posts_0_author"
+              }
+            ],
+            "extract": [
+              {
+                "p15_response_body_posts_0_id": {
+                  "jsonPath": "$[\"posts\"][0][\"id\"]"
+                }
+              },
+              {
+                "p15_response_body_posts_0_updated_at": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_at\"]"
+                }
+              },
+              {
+                "p15_response_body_posts_0_author": {
+                  "jsonPath": "$[\"posts\"][0][\"author\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/${__encode_url(p15_response_body_posts_0_id)}/?include=tags",
+            "description": "PUT posts/${posts_0_id}",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"id\": ${__escape_quotes(p15_response_body_posts_0_id)},\n      \"title\": \"test123\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"test123\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"published\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"updated_at\": \"${__escape_quotes(p15_response_body_posts_0_updated_at)}\",\n      \"updated_by\": ${__escape_quotes(p13_response_body_posts_0_updated_by)},\n      \"published_at\": null,\n      \"created_at\": \"${__escape_quotes(p13_response_body_posts_0_created_at)}\",\n      \"created_by\": ${__escape_quotes(p13_response_body_posts_0_created_by)},\n      \"author\": ${__escape_quotes(p15_response_body_posts_0_author)},\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "PUT",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/32924/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          }
+        ],
+        "meta": {
+          "description": "Recorded Flow - Aug 10 07:21"
+        },
+        "parameters": [
+          {
+            "blog_url": "https://loadmill-test-blog.herokuapp.com"
+          },
+          {
+            "username": "a@b.com"
+          },
+          {
+            "password": "Test1234"
+          },
+          {
+            "client_secret": "8c93bf1bb580"
+          },
+          {
+            "p2_request_body_posts_0_title": "My test post ${__random_number}"
+          },
+          {
+            "p4_request_body_username": "a@b.com"
+          },
+          {
+            "p4_request_body_password": "Test1234"
+          }
+        ]
+      },
+      "runInCi": false
+    },
+    {
+      "id": "95e459b2-5731-4fb4-818c-367e81593de8",
+      "order": 11,
+      "conf": {
+        "requests": [
+          {
+            "url": "${blog_url}/",
+            "description": "GET /",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+              },
+              {
+                "Accept-Language": "en-US,en;q=0.9,he;q=0.8,pt;q=0.7"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost",
+            "description": "GET ghost",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+              },
+              {
+                "Accept-Language": "en-US,en;q=0.9,he;q=0.8,pt;q=0.7"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/",
+            "description": "GET ghost",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+              },
+              {
+                "Accept-Language": "en-US,en;q=0.9,he;q=0.8,pt;q=0.7"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p3_response_body_meta_name_env_blogUrl"
+              },
+              {
+                "check": "p3_response_body_meta_name_env_clientId"
+              },
+              {
+                "check": "p3_response_body_meta_name_env_clientSecret"
+              }
+            ],
+            "extract": [
+              {
+                "p3_response_body_meta_name_env_blogUrl": {
+                  "jQuery": {
+                    "query": "meta[name=\"env-blogUrl\"]",
+                    "attr": "content"
+                  }
+                }
+              },
+              {
+                "p3_response_body_meta_name_env_clientId": {
+                  "jQuery": {
+                    "query": "meta[name=\"env-clientId\"]",
+                    "attr": "content"
+                  }
+                }
+              },
+              {
+                "p3_response_body_meta_name_env_clientSecret": {
+                  "jQuery": {
+                    "query": "meta[name=\"env-clientSecret\"]",
+                    "attr": "content"
+                  }
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/authentication/token",
+            "description": "POST authentication/token",
+            "postData": {
+              "text": "grant_type=password&username=${__encode_url(p4_request_body_username)}&password=${__encode_url(p4_request_body_password)}&client_id=${__encode_url(p3_response_body_meta_name_env_clientId)}&client_secret=${__encode_url(p3_response_body_meta_name_env_clientSecret)}",
+              "mimeType": "application/x-www-form-urlencoded"
+            },
+            "method": "POST",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p4_response_body_access_token"
+              },
+              {
+                "check": "p4_response_body_token_type"
+              }
+            ],
+            "extract": [
+              {
+                "p4_response_body_access_token": {
+                  "jsonPath": "$[\"access_token\"]"
+                }
+              },
+              {
+                "p4_response_body_token_type": {
+                  "jsonPath": "$[\"token_type\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/settings/?type=blog%2Ctheme%2Cprivate",
+            "description": "GET settings",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/users/me/?include=roles&status=all",
+            "description": "GET users/me",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p6_response_body_users_0_language"
+              }
+            ],
+            "extract": [
+              {
+                "p6_response_body_users_0_language": {
+                  "jsonPath": "$[\"users\"][0][\"language\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/?page=1&limit=15&status=all&staticPages=all&include=tags",
+            "description": "GET posts",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/notifications/",
+            "description": "GET notifications",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/signin/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/settings/?type=blog%2Ctheme%2Cprivate",
+            "description": "GET settings",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/tags/?limit=all",
+            "description": "GET tags",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/users/?limit=all&include=roles",
+            "description": "GET users",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/slugs/post/test/",
+            "description": "GET slugs/post/test",
+            "method": "GET",
+            "headers": [
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p12_response_body_slugs_0_slug"
+              }
+            ],
+            "extract": [
+              {
+                "p12_response_body_slugs_0_slug": {
+                  "jsonPath": "$[\"slugs\"][0][\"slug\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/?include=tags",
+            "description": "POST posts",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"title\": \"test\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"draft\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"author\": \"1\",\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "POST",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p13_response_body_posts_0_id"
+              },
+              {
+                "check": "p13_response_body_posts_0_updated_at"
+              },
+              {
+                "check": "p13_response_body_posts_0_author"
+              },
+              {
+                "check": "p13_response_body_posts_0_created_at"
+              },
+              {
+                "check": "p13_response_body_posts_0_created_by"
+              },
+              {
+                "check": "p13_response_body_posts_0_updated_by"
+              }
+            ],
+            "extract": [
+              {
+                "p13_response_body_posts_0_id": {
+                  "jsonPath": "$[\"posts\"][0][\"id\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_updated_at": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_at\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_author": {
+                  "jsonPath": "$[\"posts\"][0][\"author\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_created_at": {
+                  "jsonPath": "$[\"posts\"][0][\"created_at\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_created_by": {
+                  "jsonPath": "$[\"posts\"][0][\"created_by\"]"
+                }
+              },
+              {
+                "p13_response_body_posts_0_updated_by": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_by\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/${__encode_url(p13_response_body_posts_0_id)}/?include=tags",
+            "description": "PUT posts/${posts_0_id}",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"id\": ${__escape_quotes(p13_response_body_posts_0_id)},\n      \"title\": \"test\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"test\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"draft\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"updated_at\": \"${__escape_quotes(p13_response_body_posts_0_updated_at)}\",\n      \"updated_by\": ${__escape_quotes(p13_response_body_posts_0_updated_by)},\n      \"published_at\": null,\n      \"created_at\": \"${__escape_quotes(p13_response_body_posts_0_created_at)}\",\n      \"created_by\": ${__escape_quotes(p13_response_body_posts_0_created_by)},\n      \"author\": ${__escape_quotes(p13_response_body_posts_0_author)},\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "PUT",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/32924/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p14_response_body_posts_0_id"
+              },
+              {
+                "check": "p14_response_body_posts_0_updated_at"
+              },
+              {
+                "check": "p14_response_body_posts_0_author"
+              }
+            ],
+            "extract": [
+              {
+                "p14_response_body_posts_0_id": {
+                  "jsonPath": "$[\"posts\"][0][\"id\"]"
+                }
+              },
+              {
+                "p14_response_body_posts_0_updated_at": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_at\"]"
+                }
+              },
+              {
+                "p14_response_body_posts_0_author": {
+                  "jsonPath": "$[\"posts\"][0][\"author\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/${__encode_url(p14_response_body_posts_0_id)}/?include=tags",
+            "description": "PUT posts/${posts_0_id}",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"id\": ${__escape_quotes(p14_response_body_posts_0_id)},\n      \"title\": \"test\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"test123\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"draft\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"updated_at\": \"${__escape_quotes(p14_response_body_posts_0_updated_at)}\",\n      \"updated_by\": ${__escape_quotes(p13_response_body_posts_0_updated_by)},\n      \"published_at\": null,\n      \"created_at\": \"${__escape_quotes(p13_response_body_posts_0_created_at)}\",\n      \"created_by\": ${__escape_quotes(p13_response_body_posts_0_created_by)},\n      \"author\": ${__escape_quotes(p14_response_body_posts_0_author)},\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "PUT",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/32924/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [
+              {
+                "check": "p15_response_body_posts_0_id"
+              },
+              {
+                "check": "p15_response_body_posts_0_updated_at"
+              },
+              {
+                "check": "p15_response_body_posts_0_author"
+              }
+            ],
+            "extract": [
+              {
+                "p15_response_body_posts_0_id": {
+                  "jsonPath": "$[\"posts\"][0][\"id\"]"
+                }
+              },
+              {
+                "p15_response_body_posts_0_updated_at": {
+                  "jsonPath": "$[\"posts\"][0][\"updated_at\"]"
+                }
+              },
+              {
+                "p15_response_body_posts_0_author": {
+                  "jsonPath": "$[\"posts\"][0][\"author\"]"
+                }
+              }
+            ],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          },
+          {
+            "url": "${blog_url}/ghost/api/v0.1/posts/${__encode_url(p15_response_body_posts_0_id)}/?include=tags",
+            "description": "PUT posts/${posts_0_id}",
+            "postData": {
+              "text": "{\n  \"posts\": [\n    {\n      \"id\": ${__escape_quotes(p15_response_body_posts_0_id)},\n      \"title\": \"test123\",\n      \"slug\": \"${__escape_quotes(p12_response_body_slugs_0_slug)}\",\n      \"markdown\": \"test123\",\n      \"image\": null,\n      \"featured\": false,\n      \"page\": false,\n      \"status\": \"published\",\n      \"language\": \"${__escape_quotes(p6_response_body_users_0_language)}\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"updated_at\": \"${__escape_quotes(p15_response_body_posts_0_updated_at)}\",\n      \"updated_by\": ${__escape_quotes(p13_response_body_posts_0_updated_by)},\n      \"published_at\": null,\n      \"created_at\": \"${__escape_quotes(p13_response_body_posts_0_created_at)}\",\n      \"created_by\": ${__escape_quotes(p13_response_body_posts_0_created_by)},\n      \"author\": ${__escape_quotes(p15_response_body_posts_0_author)},\n      \"publishedBy\": null,\n      \"tags\": []\n    }\n  ]\n}",
+              "mimeType": "application/json; charset=UTF-8"
+            },
+            "method": "PUT",
+            "headers": [
+              {
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              {
+                "Authorization": "${p4_response_body_token_type} ${p4_response_body_access_token}"
+              },
+              {
+                "Accept": "application/json, text/javascript, */*; q=0.01"
+              },
+              {
+                "Referer": "https://loadmill-test-blog.herokuapp.com/ghost/editor/32924/"
+              },
+              {
+                "X-Ghost-Version": "0.11"
+              }
+            ],
+            "assert": [],
+            "extract": [],
+            "postScript": "",
+            "timeout": 60000,
+            "expectedStatus": "SUCCESS"
+          }
+        ],
+        "meta": {
+          "description": "Recorded Flow - Aug 10 07:21"
         },
         "parameters": [
           {
