@@ -1,0 +1,47 @@
+conf:
+  meta:
+    description: my perfect suite
+  parameters: []
+  useCookies: true
+  loginFlow: []
+  authenticationHeaders: []
+  sharedLoginFlowDescription: New Load Test - Oct 26
+  parametersScope: FLOW
+flows:
+  - id: a79296ee-9aa1-4f7b-b413-ca6c8e294e07
+    order: 0
+    conf:
+      meta:
+        description: New Flow
+      requests:
+        
+        - method: GET
+          url: app.todo.com
+          postData:
+            text: ""
+            mimeType: application/json
+          extract:
+            - a: a
+          postScript: a
+          assert:
+            - check: a
+              equals: a
+          loop:
+            assert:
+              check: a
+              equals: a
+            iterations: 2
+    runInCi: false
+hooks:
+  beforeAll:
+    meta: {}
+    requests:
+      
+
+      - method: GET
+        url: asd
+dependencies:
+  hooks:
+    beforeAllId: 1ad972ab-7877-480b-8c3f-3425f24440e5
+  login:
+    id: 7b497b2f-00e7-42ea-a686-b0efd46087a4
