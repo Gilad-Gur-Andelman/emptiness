@@ -1,0 +1,25 @@
+conf:
+  meta:
+    description: fresh suite
+  parameters: []
+  useCookies: true
+  loginFlow: []
+  authenticationHeaders: []
+  sharedLoginFlowDescription: New Load Test - Oct 28
+  parametersScope: FLOW
+flows:
+  - id: 70e26315-47ff-40ce-8d91-4ca147823ff1
+    order: 0
+    conf:
+      meta:
+        description: New Flow
+      requests:
+        
+        - method: GET
+          url: arnon.com
+    runInCi: false
+hooks: {}
+dependencies:
+  login:
+    id: 221e0930-38e8-4155-bb7f-a1751ddc0980
+
