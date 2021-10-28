@@ -1,0 +1,171 @@
+conf:
+  meta:
+    description: example suite for generating schema
+  parameters:
+    - random_name: ${__random_letters('5')}
+    - random_age: ${__random_digits('2')}
+    - the_url: http://example.com/
+  auth:
+    user: Alex
+    password: Caruso
+  useCookies: true
+  loginFlow:
+    
+    - method: GET
+      url: https://loadmill-test-blog.herokuapp.com
+
+  authenticationHeaders:
+    - authorization: Bearer 123-456-789-asd-qwe-zxc
+  sharedLoginFlowDescription: New Load Test - Oct 28
+  parametersScope: FLOW
+flows:
+  - id: 521a4189-8149-4637-aab0-28525882703f
+    order: 0
+    conf:
+      meta:
+        description: Flow One
+      requests:
+        
+        - description: CREATE user
+          method: POST
+          url: my-fake-app.com/users
+          postData:
+            text: |-
+              {
+              	"name": "${random_name}",
+                	"age": "${random_age}"
+              }
+            mimeType: application/json
+          headers:
+            - accept: application/json
+            - content-type: application/json
+          extract:
+            - user_id:
+                jsonPath: $.id
+            - arnon: peleg
+          postScript: assert.ok(0 <= person_id && person_id < Infinity)
+          assert:
+            - check: user_id
+            - check: user_id
+              falsy: true
+            - check: arnon
+              equals: peleg
+            - check: random_age
+              lesser: "100"
+          loop:
+            assert:
+              check: user_id
+            iterations: 1
+
+        - description: GET user
+          method: GET
+          url: my-fake-app.com/users/${user_id}
+          extract: []
+          postScript: assert.ok(0 <= person_id && person_id < Infinity)
+          assert:
+            - check: user_id
+            - check: user_id
+              falsy: true
+            - check: arnon
+              equals: peleg
+            - check: random_age
+              lesser: "100"
+          loop:
+            assert:
+              check: user_id
+            iterations: 1
+    runInCi: false
+  - id: bb4ce472-38f0-475f-88af-5f616599d96e
+    order: 1
+    conf:
+
+      meta:
+        description: Flow two
+      requests:
+        
+        - description: first request
+          method: GET
+          url: ${the_url}
+          headers: []
+          expectedStatus: SUCCESS
+          timeout: 60000
+          extract: []
+          assert: []
+
+      parameterPools: []
+    runInCi: false
+hooks:
+  beforeAll:
+    meta: {}
+    requests:
+      
+      - method: GET
+        url: ${host}.org/status/${st}
+        headers: []
+        expectedStatus: SUCCESS
+        timeout: 60000
+        extract: []
+        assert: []
+
+    parameters:
+      - st:
+          - "200"
+          - "200"
+          - "200"
+          - "200"
+          - "403"
+      - host: httpbin
+    parameterPools: []
+    authenticationHeaders:
+      - head1: rivi1
+    notifications: []
+    concurrency: 5
+    duration: 120000
+    rampUp: 60000
+    iterationDelay: 1000
+    cachePenetration: {}
+    targetedCountries: []
+  beforeEach:
+    meta: {}
+    requests:
+      
+      - method: GET
+        url: https://loadmill-test-blog.herokuapp.com
+  afterEach:
+
+    meta: {}
+    requests:
+      
+      - method: GET
+        url: www.walla.com
+        headers: []
+        expectedStatus: SUCCESS
+        timeout: 60000
+        extract: []
+        assert: []
+
+    parameters: []
+    parameterPools: []
+    authenticationHeaders: []
+    notifications: []
+    concurrency: 1
+    duration: 60000
+    rampUp: 60000
+    iterationDelay: 1000
+    cachePenetration: {}
+    targetedCountries: []
+  afterAll:
+    meta: {}
+    requests:
+      
+      - method: GET
+        url: https://loadmill-test-blog.herokuapp.com
+dependencies:
+  hooks:
+
+    beforeAllId: 337952ca-4bcc-425a-be17-8d5aa2a9a7d8
+    beforeEachId: e867ac19-afce-4c5b-8a13-5116514e379d
+    afterEachId: ff09365a-8208-45ff-b4fc-1d33270ce08a
+    afterAllId: 86bf76b6-0b59-4cd5-afcf-19dee86486ea
+  login:
+    id: d4413ef8-9b5a-4846-a772-0ae83832be0e
