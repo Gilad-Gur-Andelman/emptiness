@@ -40,7 +40,10 @@ flows:
       meta:
         description: 🔑 Login & create a blog post
       requests:
-        
+        - url: example.com
+          extract:
+            - param:
+                jsonPath: $
         - description: "🚪 Load login page "
           method: GET
           url: ${blog_url}/ghost/signin/

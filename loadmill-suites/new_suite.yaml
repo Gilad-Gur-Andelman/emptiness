@@ -1,0 +1,9 @@
+conf:
+meta:
+  description: My Awesome Suite
+flows:
+- conf:
+  requests:
+
+    - method: GET
+      url: example.com
